@@ -20,6 +20,11 @@ fn read_raw_json(raw_data: &str) -> Result<UserData, Box<dyn Error>> {
     Ok(parsed)
 }
 
+fn convert_to_json(from_data: &UserData) -> Result<String, Box<dyn Error>> {
+    let json_data = serde_json::to_string(from_data)?;
+    Ok(json_data)
+}
+
 fn main() {
     let json_data = r#"
     {
@@ -40,4 +45,7 @@ fn main() {
 
     let parsed_data: UserData = read_raw_json(json_data).unwrap();
     println!("{:?}", parsed_data);
+
+    let json_data = convert_to_json(&parsed_data).unwrap();
+    println!("{}", json_data);
 }
